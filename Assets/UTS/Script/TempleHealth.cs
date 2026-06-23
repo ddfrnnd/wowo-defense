@@ -10,9 +10,17 @@ public class TempleHealth : MonoBehaviour
     [Header("UI")]
     public Slider healthBar;
 
+    [Header("Game UI")]
+    public GameUIManager gameUI;
+
     void Start()
     {
         currentHealth = maxHealth;
+
+        // Find GameUIManager if not assigned
+        if (gameUI == null)
+            gameUI = FindAnyObjectByType<GameUIManager>();
+
         UpdateHealthUI();
     }
 
@@ -30,6 +38,10 @@ public class TempleHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             Debug.Log("GAME OVER!");
+
+            // Show game over panel
+            if (gameUI != null)
+                gameUI.ShowGameOver();
         }
     }
 
@@ -40,5 +52,9 @@ public class TempleHealth : MonoBehaviour
             healthBar.maxValue = maxHealth;
             healthBar.value = currentHealth;
         }
+
+        // Also update via GameUIManager
+        if (gameUI != null)
+            gameUI.UpdateTempleHP(currentHealth, maxHealth);
     }
-}
+}

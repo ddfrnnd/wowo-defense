@@ -65,44 +65,69 @@ public class GunController : MonoBehaviour
 
     // ───────────────────────────────────────────────────────────────
     void Shoot()
-{
-    nextFireTime = Time.time + fireRate;
-    currentAmmo--;
-    UpdateAmmoUI();
-
-    GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-
-    Rigidbody rb = bullet.GetComponent<Rigidbody>();
-    if (rb != null)
     {
-        // Ganti firePoint.forward dengan Camera.main.transform.forward
-        rb.linearVelocity = Camera.main.transform.forward * bulletSpeed;
+        nextFireTime = Time.time + fireRate;
+        currentAmmo--;
+        UpdateAmmoUI();
+
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            // Ganti firePoint.forward dengan Camera.main.transform.forward
+            rb.linearVelocity = Camera.main.transform.forward * bulletSpeed;
+        }
+
+        Destroy(bullet, bulletLifetime);
+
+        if (muzzleFlash != null)
+            StartCoroutine(ShowMuzzleFlash());
     }
-
-    Destroy(bullet, bulletLifetime);
-
-    if (muzzleFlash != null)
-        StartCoroutine(ShowMuzzleFlash());
-}
 
     // ───────────────────────────────────────────────────────────────
     IEnumerator Reload()
-{
-    isReloading = true;
-
-    if (ammoText != null)
     {
-        ammoText.text = "Reloading...";
-        ammoText.color = new Color(1f, 0.5f, 0f); // orange
+        isReloading = true;
+
+        if (ammoText != null)
+        {
+            ammoText.text = "Reloading...";
+            ammoText.color = new Color(1f, 0.5f, 0f); // orange
+        }
+
+        // --- ANIMASI RELOAD (Tilt Senjata) ---
+        Quaternion originalRot = transform.localRotation;
+        Quaternion reloadRot = originalRot * Quaternion.Euler(45f, 0f, 0f); // Miringkan senjata ke bawah/atas
+
+        float halfTime = reloadTime / 2f;
+        float elapsed = 0f;
+
+        // Turunkan senjata
+        while (elapsed < halfTime)
+        {
+            transform.localRotation = Quaternion.Lerp(originalRot, reloadRot, (elapsed / halfTime));
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Kembalikan senjata
+        elapsed = 0f;
+        while (elapsed < halfTime)
+        {
+            transform.localRotation = Quaternion.Lerp(reloadRot, originalRot, (elapsed / halfTime));
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.localRotation = originalRot; // Pastikan posisi kembali sempurna
+        // ------------------------------------
+
+        currentAmmo = magazineSize;
+        isReloading = false;
+
+        UpdateAmmoUI();
     }
-
-    yield return new WaitForSeconds(reloadTime);
-
-    currentAmmo = magazineSize;
-    isReloading = false;
-
-    UpdateAmmoUI();
-}
 
     // ───────────────────────────────────────────────────────────────
     IEnumerator ShowMuzzleFlash()

@@ -18,12 +18,23 @@ public class WaveManager : MonoBehaviour
     public int enemyIncreasePerWave = 2;
     public float speedIncreasePerWave = 0.4f;
 
+    [Header("UI")]
+    public GameUIManager gameUI;
+
     private int currentWave = 0;
     private int enemiesAlive = 0;
     private bool isSpawning = false;
 
     void Start()
     {
+        // Find GameUIManager if not assigned
+        if (gameUI == null)
+            gameUI = FindAnyObjectByType<GameUIManager>();
+
+        // Update initial wave display
+        if (gameUI != null)
+            gameUI.UpdateWaveText(0, totalWaves);
+
         StartCoroutine(StartNextWave());
     }
 
@@ -42,6 +53,10 @@ public class WaveManager : MonoBehaviour
 
         Debug.Log("WAVE " + currentWave + " DIMULAI! Enemy: " + enemyCount);
 
+        // Update wave UI
+        if (gameUI != null)
+            gameUI.UpdateWaveText(currentWave, totalWaves);
+
         for (int i = 0; i < enemyCount; i++)
         {
             SpawnEnemy();
@@ -52,6 +67,8 @@ public class WaveManager : MonoBehaviour
 
         isSpawning = false;
     }
+
+    private int lastSpawnIndex = -1;
 
     void SpawnEnemy()
     {
@@ -67,7 +84,15 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
-        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        int spawnIndex = Random.Range(0, spawnPoints.Length);
+        // Jangan gunakan titik spawn yang sama berturut-turut agar musuh menyebar
+        if (spawnIndex == lastSpawnIndex && spawnPoints.Length > 1)
+        {
+            spawnIndex = (spawnIndex + 1) % spawnPoints.Length;
+        }
+        lastSpawnIndex = spawnIndex;
+
+        Transform spawnPoint = spawnPoints[spawnIndex];
 
         GameObject enemy = Instantiate(
             enemyPrefab,
@@ -80,7 +105,9 @@ public class WaveManager : MonoBehaviour
 
         if (mover != null)
         {
-            mover.speed += (currentWave - 1) * speedIncreasePerWave;
+            // Tambahkan variasi kecepatan acak agar musuh tidak jalan berbaris rapi
+            float randomSpeedVariance = Random.Range(-0.5f, 1.5f);
+            mover.speed += ((currentWave - 1) * speedIncreasePerWave) + randomSpeedVariance;
         }
     }
 
@@ -109,15 +136,19 @@ public class WaveManager : MonoBehaviour
     {
         Debug.Log("LEVEL CLEAR!");
 
-        string currentScene = SceneManager.GetActiveScene().name;
-
-        if (currentScene == "Level1")
+        // Show victory panel instead of directly loading next scene
+        if (gameUI != null)
         {
-            SceneManager.LoadScene("Level2");
+            gameUI.ShowVictory();
         }
-        else if (currentScene == "Level2")
+        else
         {
-            Debug.Log("YOU WIN!");
+            // Fallback: direct scene load
+            string currentScene = SceneManager.GetActiveScene().name;
+            if (currentScene == "Level1")
+                SceneManager.LoadScene("Level2");
+            else if (currentScene == "Level2")
+                Debug.Log("YOU WIN!");
         }
     }
-}
+}
