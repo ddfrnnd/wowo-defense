@@ -63,6 +63,27 @@ public class GunController : MonoBehaviour
         }
     }
 
+    public void MobileFire()
+    {
+        if (isReloading || Time.time < nextFireTime)
+            return;
+
+        if (currentAmmo > 0)
+        {
+            Shoot();
+        }
+        else
+        {
+            StartCoroutine(Reload());
+        }
+    }
+
+    public void MobileReload()
+    {
+        if (!isReloading && currentAmmo < magazineSize)
+            StartCoroutine(Reload());
+    }
+
     // ───────────────────────────────────────────────────────────────
     void Shoot()
     {

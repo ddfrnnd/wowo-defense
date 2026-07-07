@@ -24,10 +24,17 @@ public class FirstPersonController : MonoBehaviour
     private Vector3 currentMovement;
     private float verticalRotation;
     private float CurrentSpeed => walkSpeed * (playerInputHandler.SprintTriggered ? sprintMultiplier : 1);
+    private GameUIManager uiManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        uiManager = FindFirstObjectByType<GameUIManager>();
+        if (uiManager != null && uiManager.instructionsPanel != null)
+        {
+            // Let GameUIManager handle the cursor lock / visibility
+            return;
+        }
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -35,6 +42,11 @@ public class FirstPersonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (uiManager != null && (uiManager.IsPaused() || (uiManager.instructionsPanel != null && uiManager.instructionsPanel.activeSelf) || uiManager.IsGameOver()))
+        {
+            return;
+        }
+
         HandleMovement();
         HandleRotation();
     }

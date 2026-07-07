@@ -16,20 +16,38 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] private string sprint = "Sprint";
     [SerializeField] private string rotateObject = "RotateObject";
 
-
     private InputAction movementAction;
     private InputAction rotationAction;
     private InputAction jumpAction;
     private InputAction sprintAction;
     private InputAction rotateObjectAction;
 
+    public Vector2 MovementInput
+    {
+        get
+        {
+            Vector2 kbInput = (movementAction != null && movementAction.enabled) ? movementAction.ReadValue<Vector2>() : Vector2.zero;
+            return kbInput + mobileMovementInput;
+        }
+    }
 
-    public Vector2 MovementInput { get; private set; }
-    public Vector2 RotationInput { get; private set; }
+    public Vector2 RotationInput
+    {
+        get
+        {
+            Vector2 kbInput = (rotationAction != null && rotationAction.enabled) ? rotationAction.ReadValue<Vector2>() : Vector2.zero;
+            return kbInput + mobileRotationInput;
+        }
+    }
+
+    public Vector2 KeyboardMovementInput => (movementAction != null && movementAction.enabled) ? movementAction.ReadValue<Vector2>() : Vector2.zero;
+
     public bool JumpTriggered { get; private set; }
     public bool SprintTriggered { get; private set; }
     public bool RotateObjectTriggered { get; private set; }
 
+    private Vector2 mobileMovementInput;
+    private Vector2 mobileRotationInput;
 
     private void Awake()
     {
@@ -45,12 +63,6 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void SubscribeActionValuesToInputEvents()
     {
-        movementAction.performed += inputInfo => MovementInput = inputInfo.ReadValue<Vector2>();
-        movementAction.canceled += inputInfo => MovementInput = Vector2.zero;
-
-        rotationAction.performed += inputInfo => RotationInput = inputInfo.ReadValue<Vector2>();
-        rotationAction.canceled += inputInfo => RotationInput = Vector2.zero;
-
         jumpAction.performed += inputInfo => JumpTriggered = true;
         jumpAction.canceled += inputInfo => JumpTriggered = false;
 
@@ -59,14 +71,7 @@ public class PlayerInputHandler : MonoBehaviour
 
         sprintAction.performed += inputInfo => SprintTriggered = true;
         sprintAction.canceled += inputInfo => SprintTriggered = false;
-
     }
-
-    /// <summary>
-    /// Atomically consumes the toggle flag. Returns true if the toggle was set and clears it.
-    /// This prevents external classes from needing write access to the property setter.
-    /// </summary>
-    
 
     private void OnEnable()
     {
@@ -76,5 +81,15 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnDisable()
     {
         playerControls.FindActionMap(actionMapName).Disable();
+    }
+
+    public void SetMobileMovement(Vector2 value)
+    {
+        mobileMovementInput = Vector2.ClampMagnitude(value, 1f);
+    }
+
+    public void SetMobileRotation(Vector2 value)
+    {
+        mobileRotationInput = value;
     }
 }

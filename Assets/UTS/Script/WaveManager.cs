@@ -102,12 +102,33 @@ public class WaveManager : MonoBehaviour
         );
 
         EnemyMover mover = enemy.GetComponent<EnemyMover>();
+        EnemyHealth health = enemy.GetComponent<EnemyHealth>();
 
-        if (mover != null)
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Level2")
         {
-            // Tambahkan variasi kecepatan acak agar musuh tidak jalan berbaris rapi
-            float randomSpeedVariance = Random.Range(-0.5f, 1.5f);
-            mover.speed += ((currentWave - 1) * speedIncreasePerWave) + randomSpeedVariance;
+            // Level 2: Big, slow enemies with high health
+            enemy.transform.localScale = UnityEngine.Vector3.one * 2.2f;
+
+            if (mover != null)
+            {
+                float randomSpeedVariance = UnityEngine.Random.Range(-0.1f, 0.3f);
+                mover.speed = 0.5f + ((currentWave - 1) * 0.1f) + randomSpeedVariance;
+                mover.templeDamage = 30; // Boss/heavy enemy deals more damage to temple
+            }
+
+            if (health != null)
+            {
+                health.health = 120 + ((currentWave - 1) * 30); // 120 HP for Wave 1, increasing per wave
+            }
+        }
+        else
+        {
+            // Level 1: Default scale and speed
+            if (mover != null)
+            {
+                float randomSpeedVariance = UnityEngine.Random.Range(-0.5f, 1.5f);
+                mover.speed += ((currentWave - 1) * speedIncreasePerWave) + randomSpeedVariance;
+            }
         }
     }
 

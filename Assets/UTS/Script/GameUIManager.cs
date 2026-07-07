@@ -12,6 +12,8 @@ public class GameUIManager : MonoBehaviour
     public Slider templeHealthBar;
 
     [Header("Pause Menu")]
+    public GameObject instructionsPanel;
+    public Button startGameButton;
     public GameObject pausePanel;
     public Button resumeButton;
     public Button mainMenuButton;
@@ -26,11 +28,36 @@ public class GameUIManager : MonoBehaviour
     public Button nextLevelButton;
     public Button victoryMenuButton;
 
+    [Header("Mobile UI")]
+    public GameObject mobileControlsPanel;
+
     private bool isPaused = false;
     private bool isGameOver = false;
+    private bool isShowingInstructions = false;
 
     void Start()
     {
+        if (mobileControlsPanel == null)
+        {
+            var canvas = FindFirstObjectByType<Canvas>();
+            if (canvas != null)
+            {
+                var t = canvas.transform.Find("MobileControls");
+                if (t != null) mobileControlsPanel = t.gameObject;
+            }
+        }
+        if (mobileControlsPanel == null)
+        {
+            var mc = FindFirstObjectByType<MobileControlsUI>();
+            if (mc != null && mc.transform.parent != null)
+            {
+                mobileControlsPanel = mc.transform.parent.gameObject;
+            }
+        }
+
+        if (startGameButton != null)
+            startGameButton.onClick.AddListener(StartGameplay);
+
         // Set up Pause button listeners
         if (resumeButton != null)
             resumeButton.onClick.AddListener(ResumeGame);
@@ -50,20 +77,27 @@ public class GameUIManager : MonoBehaviour
             victoryMenuButton.onClick.AddListener(GoToMainMenu);
 
         // Ensure all panels are hidden at start
+        if (instructionsPanel != null) instructionsPanel.SetActive(true);
         if (pausePanel != null) pausePanel.SetActive(false);
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
         if (victoryPanel != null) victoryPanel.SetActive(false);
 
-        // Ensure game is running
-        Time.timeScale = 1f;
+        if (mobileControlsPanel != null)
+            mobileControlsPanel.SetActive(instructionsPanel == null || !instructionsPanel.activeSelf);
+
+        Time.timeScale = instructionsPanel != null ? 0f : 1f;
+        isShowingInstructions = instructionsPanel != null;
         isPaused = false;
         isGameOver = false;
+
+        Cursor.lockState = instructionsPanel != null ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = instructionsPanel != null;
     }
 
     void Update()
     {
         // Don't allow pause if game is over
-        if (isGameOver) return;
+        if (isGameOver || isShowingInstructions) return;
 
         // Toggle pause with Escape key
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -77,6 +111,22 @@ public class GameUIManager : MonoBehaviour
 
     // ===== PAUSE SYSTEM =====
 
+    public void StartGameplay()
+    {
+        isShowingInstructions = false;
+        isPaused = false;
+        Time.timeScale = 1f;
+
+        if (instructionsPanel != null)
+            instructionsPanel.SetActive(false);
+
+        if (mobileControlsPanel != null)
+            mobileControlsPanel.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
     public void PauseGame()
     {
         isPaused = true;
@@ -84,6 +134,9 @@ public class GameUIManager : MonoBehaviour
 
         if (pausePanel != null)
             pausePanel.SetActive(true);
+
+        if (mobileControlsPanel != null)
+            mobileControlsPanel.SetActive(false);
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -96,6 +149,9 @@ public class GameUIManager : MonoBehaviour
 
         if (pausePanel != null)
             pausePanel.SetActive(false);
+
+        if (mobileControlsPanel != null)
+            mobileControlsPanel.SetActive(true);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -110,6 +166,9 @@ public class GameUIManager : MonoBehaviour
 
         if (gameOverPanel != null)
             gameOverPanel.SetActive(true);
+
+        if (mobileControlsPanel != null)
+            mobileControlsPanel.SetActive(false);
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -131,6 +190,9 @@ public class GameUIManager : MonoBehaviour
 
         if (victoryPanel != null)
             victoryPanel.SetActive(true);
+
+        if (mobileControlsPanel != null)
+            mobileControlsPanel.SetActive(false);
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
