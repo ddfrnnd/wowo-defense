@@ -10,12 +10,12 @@ public class WaveManager : MonoBehaviour
     public Transform enemyParent;
 
     public int totalWaves = 3;
-    public int baseEnemyCount = 3;
+    public int baseEnemyCount = 8;
     public float timeBetweenWaves = 5f;
     public float spawnDelay = 0.8f;
 
     [Header("Escalate")]
-    public int enemyIncreasePerWave = 2;
+    public int enemyIncreasePerWave = 4;
     public float speedIncreasePerWave = 0.4f;
 
     [Header("UI")]
@@ -107,7 +107,7 @@ public class WaveManager : MonoBehaviour
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Level2")
         {
             // Level 2: Big, slow enemies with high health
-            enemy.transform.localScale = UnityEngine.Vector3.one * 2.2f;
+            enemy.transform.localScale = UnityEngine.Vector3.one * 2.6f;
 
             if (mover != null)
             {
@@ -118,12 +118,14 @@ public class WaveManager : MonoBehaviour
 
             if (health != null)
             {
-                health.health = 120 + ((currentWave - 1) * 30); // 120 HP for Wave 1, increasing per wave
+                health.health = 200 + ((currentWave - 1) * 50); // Increased health for Level 2
             }
         }
         else
         {
-            // Level 1: Default scale and speed
+            // Level 1: Default scale and speed, slightly larger scale
+            enemy.transform.localScale = UnityEngine.Vector3.one * 1.5f;
+
             if (mover != null)
             {
                 float randomSpeedVariance = UnityEngine.Random.Range(-0.5f, 1.5f);

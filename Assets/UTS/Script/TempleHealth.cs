@@ -21,6 +21,14 @@ public class TempleHealth : MonoBehaviour
         if (gameUI == null)
             gameUI = FindAnyObjectByType<GameUIManager>();
 
+        // Find TempleHealthBar slider if not assigned
+        if (healthBar == null)
+        {
+            GameObject hpBarObj = GameObject.Find("TempleHealthBar");
+            if (hpBarObj != null)
+                healthBar = hpBarObj.GetComponent<Slider>();
+        }
+
         UpdateHealthUI();
     }
 

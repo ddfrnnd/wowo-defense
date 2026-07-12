@@ -1,18 +1,19 @@
 using UnityEngine;
+using InfimaGames.LowPolyShooterPack;
 
 public class WeaponPickup : MonoBehaviour
 {
     public int weaponIndexToUnlock;
     private bool isPlayerNear = false;
-    private WeaponSwitcher currentSwitcher = null;
+    private InventoryBehaviour currentInventory = null;
 
     void Update()
     {
-        if (isPlayerNear && currentSwitcher != null)
+        if (isPlayerNear && currentInventory != null)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                currentSwitcher.UnlockWeapon(weaponIndexToUnlock);
+                currentInventory.UnlockWeapon(weaponIndexToUnlock);
                 Debug.Log("Senjata " + weaponIndexToUnlock + " diambil!");
                 Destroy(gameObject);
             }
@@ -23,8 +24,8 @@ public class WeaponPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            currentSwitcher = other.GetComponentInChildren<WeaponSwitcher>();
-            if (currentSwitcher != null)
+            currentInventory = other.GetComponentInChildren<InventoryBehaviour>();
+            if (currentInventory != null)
             {
                 isPlayerNear = true;
                 Debug.Log("Tekan E untuk mengambil senjata.");
@@ -37,7 +38,7 @@ public class WeaponPickup : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isPlayerNear = false;
-            currentSwitcher = null;
+            currentInventory = null;
         }
     }
 }

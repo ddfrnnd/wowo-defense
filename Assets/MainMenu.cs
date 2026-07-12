@@ -1,7 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
+/// <summary>
+/// Main Menu manager. Handles panel switching, settings, and scene navigation.
+/// All UI layout and styling is done in the MainMenu scene via Inspector.
+/// This script only handles LOGIC.
+/// </summary>
 public class MainMenuManager : MonoBehaviour
 {
     [Header("Panels")]
@@ -12,20 +18,42 @@ public class MainMenuManager : MonoBehaviour
     public Slider musicSlider;
     public Slider sfxSlider;
 
+    [Header("Audio")]
+    public AudioSource backgroundMusic;
+
     private float musicVolume;
     private float sfxVolume;
 
     void Start()
     {
-        // Load setting yang tersimpan
+        // Load saved settings
         musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
         sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
 
-        musicSlider.value = musicVolume;
-        sfxSlider.value = sfxVolume;
+        if (musicSlider != null)
+        {
+            musicSlider.value = musicVolume;
+            musicSlider.onValueChanged.RemoveAllListeners();
+            musicSlider.onValueChanged.AddListener(OnMusicChanged);
+        }
+        if (sfxSlider != null)
+        {
+            sfxSlider.value = sfxVolume;
+            sfxSlider.onValueChanged.RemoveAllListeners();
+            sfxSlider.onValueChanged.AddListener(OnSFXChanged);
+        }
 
-        mainPanel.SetActive(true);
-        settingsPanel.SetActive(false);
+        if (backgroundMusic != null)
+        {
+            backgroundMusic.volume = musicVolume;
+            if (!backgroundMusic.isPlaying)
+            {
+                backgroundMusic.Play();
+            }
+        }
+
+        if (mainPanel != null) mainPanel.SetActive(true);
+        if (settingsPanel != null) settingsPanel.SetActive(false);
     }
 
     // ===== MAIN MENU =====
@@ -43,8 +71,8 @@ public class MainMenuManager : MonoBehaviour
 
     public void OpenSettings()
     {
-        mainPanel.SetActive(false);
-        settingsPanel.SetActive(true);
+        if (mainPanel != null) mainPanel.SetActive(false);
+        if (settingsPanel != null) settingsPanel.SetActive(true);
     }
 
     // ===== SETTINGS =====
@@ -52,6 +80,10 @@ public class MainMenuManager : MonoBehaviour
     public void OnMusicChanged(float value)
     {
         musicVolume = value;
+        if (backgroundMusic != null)
+        {
+            backgroundMusic.volume = musicVolume;
+        }
     }
 
     public void OnSFXChanged(float value)
@@ -67,17 +99,23 @@ public class MainMenuManager : MonoBehaviour
 
         Debug.Log("Settings Saved");
 
-        settingsPanel.SetActive(false);
-        mainPanel.SetActive(true);
+        if (settingsPanel != null) settingsPanel.SetActive(false);
+        if (mainPanel != null) mainPanel.SetActive(true);
     }
 
     public void Back()
     {
         // Kembalikan slider ke nilai terakhir yang tersimpan
-        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
-        sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
+        float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        if (musicSlider != null) musicSlider.value = savedVolume;
+        if (sfxSlider != null) sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
 
-        settingsPanel.SetActive(false);
-        mainPanel.SetActive(true);
+        if (backgroundMusic != null)
+        {
+            backgroundMusic.volume = savedVolume;
+        }
+
+        if (settingsPanel != null) settingsPanel.SetActive(false);
+        if (mainPanel != null) mainPanel.SetActive(true);
     }
 }
