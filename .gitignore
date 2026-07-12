@@ -45,4 +45,8 @@ desktop.ini
 *.aab
 
 # Burst Linker debug info
-*_BurstDebugInformation_DoNotShip/
+*_BurstDebugInformation_DoNotShip/
+
+# Documentation
+ManualBook.md
+
