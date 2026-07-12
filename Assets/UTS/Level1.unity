@@ -277,6 +277,12 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -355
       objectReference: {fileID: 0}
+    - target: {fileID: 255993156408812421, guid: ae064a14f341e0d4c8fb1d396188207d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 07af6e228e4ba9946b002b405eaa0c40,
+        type: 3}
     - target: {fileID: 263703735795217080, guid: ae064a14f341e0d4c8fb1d396188207d,
         type: 3}
       propertyPath: m_IsActive
@@ -420,6 +426,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameplayCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2438137345129825207, guid: ae064a14f341e0d4c8fb1d396188207d,
+        type: 3}
+      propertyPath: m_text
+      value: "<b>MISI UTAMA:</b> Pertahankan Kuil di tengah desa dari gempuran gerombolan
+        musuh!\n\n<b>KONTROL:</b>\n\u2022 Analog Kiri : Bergerak\n\u2022 Layar Kanan
+        : Geser untuk putar kamera\n\u2022 Analog Kanan (+) : Tembak \n\u2022 Tombol
+        Aim : Mode Keker / Bidik (ADS)\n\u2022 Tombol R : Isi ulang peluru (Reload)\n\u2022
+        Tombol J : Melompat\n\u2022 Tombol 1 : Senjata Utama (Assault Rifle)\n\u2022
+        Tombol 2 : Senjata Kedua (Pistol)"
+      objectReference: {fileID: 0}
     - target: {fileID: 2911708549189928990, guid: ae064a14f341e0d4c8fb1d396188207d,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -456,6 +472,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: b14a29aaec9b5c74bb582de213818f28,
         type: 3}
+    - target: {fileID: 3121388573191847714, guid: ae064a14f341e0d4c8fb1d396188207d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3439037176401511013, guid: ae064a14f341e0d4c8fb1d396188207d,
         type: 3}
       propertyPath: m_fontColor.b
@@ -607,6 +628,12 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -147.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4243186291516527373, guid: ae064a14f341e0d4c8fb1d396188207d,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 2431d03408a350e45b1b3bff3213a70a,
+        type: 3}
     - target: {fileID: 4416489076075867592, guid: ae064a14f341e0d4c8fb1d396188207d,
         type: 3}
       propertyPath: m_Enabled

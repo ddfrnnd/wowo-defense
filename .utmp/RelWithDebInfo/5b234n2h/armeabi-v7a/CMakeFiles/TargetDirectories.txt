@@ -1,5 +1,0 @@
-D:/Unity/GAMEDEV/.utmp/RelWithDebInfo/5b234n2h/armeabi-v7a/CMakeFiles/edit_cache.dir
-D:/Unity/GAMEDEV/.utmp/RelWithDebInfo/5b234n2h/armeabi-v7a/CMakeFiles/rebuild_cache.dir
-D:/Unity/GAMEDEV/.utmp/RelWithDebInfo/5b234n2h/armeabi-v7a/GameActivity/CMakeFiles/game.dir
-D:/Unity/GAMEDEV/.utmp/RelWithDebInfo/5b234n2h/armeabi-v7a/GameActivity/CMakeFiles/edit_cache.dir
-D:/Unity/GAMEDEV/.utmp/RelWithDebInfo/5b234n2h/armeabi-v7a/GameActivity/CMakeFiles/rebuild_cache.dir

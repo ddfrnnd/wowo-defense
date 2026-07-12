@@ -5221,12 +5221,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<b>MISI UTAMA:</b>\nPertahankan Kuil di tengah desa dari gempuran gerombolan
-    musuh!\n\n<b>KONTROL MOBILE:</b>\n- Analog Kiri: Bergerak | Layar Kanan: Arahkan
-    Bidikan\n- Tombol \u2295: Tembak Senjata (Tahan & Seret untuk membidik)\n- Tombol
-    R: Isi Peluru | J: Lompat\n- Tombol 1 / 2: Ganti Senjata\n\n<b>KONTROL PC:</b>\n-
-    WASD: Bergerak | Mouse: Mengarahkan Kamera\n- Klik Kiri: Menembak | R: Reload
-    | Spasi: Lompat\n- Angka 1 / 2: Ganti Senjata"
+  m_text: "<b>MISI UTAMA:</b> Pertahankan Kuil di tengah desa dari gempuran gerombolan musuh!\n\n<b>KONTROL MOBILE:</b>\n• Analog Kiri : Bergerak\n• Layar Kanan : Geser untuk putar kamera\n• Analog Kanan (⊕) : Tembak (Tahan & Seret untuk membidik)\n• Tombol Aim : Mode Keker / Bidik (ADS)\n• Tombol R : Isi ulang peluru (Reload)\n• Tombol J : Melompat\n• Tombol Run : Berlari cepat (Sprint)\n• Tombol 1 : Senjata Utama (Assault Rifle)\n• Tombol 2 : Senjata Kedua (Pistol)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

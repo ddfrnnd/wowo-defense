@@ -36,3 +36,13 @@ crashlytics-build.properties
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Android Gradle/NDK build cache
+.[Uu]tmp/
+
+# Builds and Executables
+*.apk
+*.aab
+
+# Burst Linker debug info
+*_BurstDebugInformation_DoNotShip/

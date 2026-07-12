@@ -15253,7 +15253,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 565f56aa71d899d41b93e3ec7fa19628, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 07af6e228e4ba9946b002b405eaa0c40, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -16879,7 +16879,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ee4361e151076a44d9a9c0660886f66e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2431d03408a350e45b1b3bff3213a70a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17181,12 +17181,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<b>MISI UTAMA:</b>\nPertahankan Kuil di tengah desa dari gempuran gerombolan
-    musuh!\n\n<b>KONTROL MOBILE:</b>\n- Analog Kiri: Bergerak | Layar Kanan: Arahkan
-    Bidikan\n- Tombol \u2295: Tembak Senjata (Tahan & Seret untuk membidik)\n- Tombol
-    R: Isi Peluru | J: Lompat\n- Tombol 1 / 2: Ganti Senjata\n\n<b>KONTROL PC:</b>\n-
-    WASD: Bergerak | Mouse: Mengarahkan Kamera\n- Klik Kiri: Menembak | R: Reload
-    | Spasi: Lompat\n- Angka 1 / 2: Ganti Senjata"
+  m_text: "<b>MISI UTAMA:</b> Pertahankan Kuil di tengah desa dari gempuran gerombolan
+    musuh!\n\n<b>KONTROL:</b>\n\u2022 Analog Kiri : Bergerak\n\u2022 Layar Kanan
+    : Geser untuk putar kamera\n\u2022 Analog Kanan (+) : Tembak\n\u2022 Tombol Aim
+    : Mode Keker / Bidik (ADS)\n\u2022 Tombol R : Isi ulang peluru (Reload)\n\u2022
+    Tombol J : Melompat\n\u2022 Tombol 1 : Senjata Utama (Assault Rifle)\n\u2022
+    Tombol 2 : Senjata Kedua (Pistol)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -18181,7 +18181,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 60, y: -100}
+  m_AnchoredPosition: {x: 60, y: -112}
   m_SizeDelta: {x: 400, y: 35}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &4813055713561693758
